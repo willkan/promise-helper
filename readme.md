@@ -20,7 +20,7 @@ var helper = require('promise-helper')
 
 custom your Promise
 
-#### promisify(func<Function>, [opt: <Object>])
+#### promisify(func\<Function>, [opt: \<Object>])
 
 make node-callback function transfer to promise
 
@@ -30,7 +30,7 @@ function async (a, cb) {
 }
 helper.promisify(async)(1).then(function (data) {}, function (err) {})
 ```
-#### all(promises<Array>)
+#### all(promises\<Array>)
 
 wait for an array of promise and cache the value in the same sequence
 
@@ -41,7 +41,7 @@ helper.all(promises).then(function (data) {
 })
 ```
 
-#### props(promises<Object>)
+#### props(promises\<Object>)
 
 wait for a map of promise and cache the value in the same key
 
@@ -55,7 +55,7 @@ helper.all(promises).then(function (data) {
 })
 ```
 
-#### sleep(timeout<Number>)
+#### sleep(timeout\<Number>)
 
 just like setTimeout, but in promise way
 
@@ -63,7 +63,7 @@ just like setTimeout, but in promise way
 sleep(1000).then(function () {console.log(1)})
 ```
 
-#### delay(func<Function>, timeout<Number>)
+#### delay(func\<Function>, timeout\<Number>)
 
 just like setTimeout, but in promise way
 
@@ -72,7 +72,7 @@ var promise = delay(function () {console.log(1)}, 1000)
 //return cancelabel promise, you can cancel by call promise.cancel()
 ```
 
-#### interval(func<Function>, timeout<Number>)
+#### interval(func\<Function>, timeout\<Number>)
 
 just like (setTimeout -> setTimeout -> setTimeout) loop, but in promise way
 
@@ -81,7 +81,7 @@ var promise = interval(function () {console.log(1)}, 1000)
 //return cancelabel promise, you can cancel by call promise.cancel()
 ```
 
-#### retry(func<Function>, condition<Function>, timeout<Function | Number>)
+#### retry(func\<Function>, condition\<Function>, timeout\<Function | Number>)
 
 retry until condtion() is true, retry time gap is timeout() or timeout
 
