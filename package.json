@@ -1,0 +1,25 @@
+{
+  "name": "onlylog",
+  "version": "0.0.4",
+  "description": "simple log",
+  "author": "willkan <wanghuikan@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/willkan/onlylog.git"
+  },
+  "keywords": [
+  ],
+  "dependencies": {
+  },
+  "devDependencies": {
+    "expect.js": "*",
+    "mocha": "*",
+    "istanbul": "*"
+  },
+  "engines": [
+    "node >=0.10.7"
+  ],
+  "scripts": {
+    "test": "make test"
+  }
+}
