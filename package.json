@@ -1,11 +1,11 @@
 {
-  "name": "onlylog",
-  "version": "0.0.4",
-  "description": "simple log",
+  "name": "promise-helper",
+  "version": "0.0.1",
+  "description": "promise helper",
   "author": "willkan <wanghuikan@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/willkan/onlylog.git"
+    "url": "https://github.com/willkan/promise-helper.git"
   },
   "keywords": [
   ],
