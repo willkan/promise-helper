@@ -17,9 +17,11 @@ var helper = require('promise-helper')
 ### api
 
 ### setPromise(Promise<Function>)
+
 custom your Promise
 
 #### promisify(func<Function>, [opt: <Object>])
+
 make node-callback function transfer to promise
 
 ```
@@ -29,6 +31,7 @@ function async (a, cb) {
 helper.promisify(async)(1).then(function (data) {}, function (err) {})
 ```
 #### all(promises<Array>)
+
 wait for an array of promise and cache the value in the same sequence
 
 ```
@@ -39,6 +42,7 @@ helper.all(promises).then(function (data) {
 ```
 
 #### props(promises<Object>)
+
 wait for a map of promise and cache the value in the same key
 
 ```
@@ -52,6 +56,7 @@ helper.all(promises).then(function (data) {
 ```
 
 #### sleep(timeout<Number>)
+
 just like setTimeout, but in promise way
 
 ```
@@ -59,6 +64,7 @@ sleep(1000).then(function () {console.log(1)})
 ```
 
 #### delay(func<Function>, timeout<Number>)
+
 just like setTimeout, but in promise way
 
 ```
@@ -67,6 +73,7 @@ var promise = delay(function () {console.log(1)}, 1000)
 ```
 
 #### interval(func<Function>, timeout<Number>)
+
 just like (setTimeout -> setTimeout -> setTimeout) loop, but in promise way
 
 ```
@@ -75,6 +82,7 @@ var promise = interval(function () {console.log(1)}, 1000)
 ```
 
 #### retry(func<Function>, condition<Function>, timeout<Function | Number>)
+
 retry until condtion() is true, retry time gap is timeout() or timeout
 
 ```
