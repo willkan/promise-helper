@@ -161,7 +161,96 @@ describe('promise-helper', function() {
     })
   })
   describe('all', function () {
-    it('should return data if all promise done', function (done) {
+    describe('customPromise.all', function () {
+      before(function () {
+        function CustomPromise (fn) {
+          return new Promise(fn)
+        }
+        helper.setPromise(CustomPromise)
+      })
+      after(function () {
+        helper.setPromise(Promise)
+      })
+      it('should return data if all promise done', function (done) {
+        var now = Date.now()
+        var counter = 0
+        function test () {
+          return helper.delay(function () {
+            return counter++
+          }, 100)
+        }
+        var promises = [test(), test(), test(), test()]
+        helper.all(promises).then(function (data) {
+          e(counter).to.be(4)
+          e(data).to.be.eql([0,1,2,3])
+          e(Date.now() - now).to.be.greaterThan(100)
+          e(Date.now() - now).not.to.be.greaterThan(150)
+          done()
+        }).catch(done)
+      })
+      it('should return error if one of promise error', function (done) {
+        var now = Date.now()
+        var counter = 0
+        var mockError = new Error('mock error')
+        function test () {
+          return helper.delay(function () {
+            counter++
+            if (counter <= 1) {
+              throw mockError
+            }
+            return counter
+          }, 100)
+        }
+        var promises = [test(), test(), test(), test()]
+        helper.all(promises).catch(function (err) {
+          e(err).to.be(mockError)
+          e(counter).to.be(4)
+          done()
+        }).catch(done)
+      })
+    })
+    describe('defaultAll', function () {
+      it('should return data if all promise done', function (done) {
+        var now = Date.now()
+        var counter = 0
+        function test () {
+          return helper.delay(function () {
+            return counter++
+          }, 100)
+        }
+        var promises = [test(), test(), test(), test()]
+        helper.all(promises).then(function (data) {
+          e(counter).to.be(4)
+          e(data).to.be.eql([0,1,2,3])
+          e(Date.now() - now).to.be.greaterThan(100)
+          e(Date.now() - now).not.to.be.greaterThan(150)
+          done()
+        }).catch(done)
+      })
+      it('should return error if one of promise error', function (done) {
+        var now = Date.now()
+        var counter = 0
+        var mockError = new Error('mock error')
+        function test () {
+          return helper.delay(function () {
+            counter++
+            if (counter <= 1) {
+              throw mockError
+            }
+            return counter
+          }, 100)
+        }
+        var promises = [test(), test(), test(), test()]
+        helper.all(promises).catch(function (err) {
+          e(err).to.be(mockError)
+          e(counter).to.be(4)
+          done()
+        }).catch(done)
+      })
+    })
+  })
+  describe('parallel', function () {
+    it('should parallel all promise if concurrency >= promises.length, concurrency(default: promise.length)', function (done) {
       var now = Date.now()
       var counter = 0
       function test () {
@@ -169,12 +258,29 @@ describe('promise-helper', function() {
           return counter++
         }, 100)
       }
-      var promises = [test(), test(), test(), test()]
-      helper.all(promises).then(function (data) {
+      var promises = [test, test, test, test]
+      helper.parallel(promises).then(function (data) {
         e(counter).to.be(4)
         e(data).to.be.eql([0,1,2,3])
         e(Date.now() - now).to.be.greaterThan(100)
         e(Date.now() - now).not.to.be.greaterThan(150)
+        done()
+      }).catch(done)
+    })
+    it('should parallel concurrency one by one if concurrency < promises.length', function (done) {
+      var now = Date.now()
+      var counter = 0
+      function test () {
+        return helper.delay(function () {
+          return counter++
+        }, 100)
+      }
+      var promises = [test, test, test, test]
+      helper.parallel(promises, 3).then(function (data) {
+        e(counter).to.be(4)
+        e(data).to.be.eql([0,1,2,3])
+        e(Date.now() - now).to.be.greaterThan(200)
+        e(Date.now() - now).not.to.be.greaterThan(300)
         done()
       }).catch(done)
     })
@@ -191,10 +297,10 @@ describe('promise-helper', function() {
           return counter
         }, 100)
       }
-      var promises = [test(), test(), test(), test()]
-      helper.all(promises).catch(function (err) {
-        e(err).to.be.ok()
-        e(counter).to.be(4)
+      var promises = [test, test, test, test]
+      helper.parallel(promises, 2).catch(function (err) {
+        e(err).to.be(mockError)
+        e(counter).to.be(2)
         done()
       }).catch(done)
     })
