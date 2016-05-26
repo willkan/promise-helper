@@ -50,8 +50,23 @@ var promises = {
   a: Promise.resolve(1), 
   b: Promise.resolve(2)
 }
-helper.all(promises).then(function (data) {
+helper.props(promises).then(function (data) {
   // data is {a: 1, b: 2}
+})
+```
+
+### parallel(func\<function>, concurrency\<Number>)
+
+```
+var counter = 0
+var test = function () {
+  return helper.delay(function () {
+    return counter++
+  }, 100)
+}
+var promiseGens = [test, test, test]
+helper.parallel(promiseGens, 2).then(function (data) {
+  // data is [0,1,2], exec time is about 200ms(because the exec concurrency is 2)
 })
 ```
 

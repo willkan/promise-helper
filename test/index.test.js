@@ -258,8 +258,8 @@ describe('promise-helper', function() {
           return counter++
         }, 100)
       }
-      var promises = [test, test, test, test]
-      helper.parallel(promises).then(function (data) {
+      var promiseGens = [test, test, test, test]
+      helper.parallel(promiseGens).then(function (data) {
         e(counter).to.be(4)
         e(data).to.be.eql([0,1,2,3])
         e(Date.now() - now).to.be.greaterThan(100)
@@ -275,8 +275,8 @@ describe('promise-helper', function() {
           return counter++
         }, 100)
       }
-      var promises = [test, test, test, test]
-      helper.parallel(promises, 3).then(function (data) {
+      var promiseGens = [test, test, test, test]
+      helper.parallel(promiseGens, 3).then(function (data) {
         e(counter).to.be(4)
         e(data).to.be.eql([0,1,2,3])
         e(Date.now() - now).to.be.greaterThan(200)
@@ -297,8 +297,8 @@ describe('promise-helper', function() {
           return counter
         }, 100)
       }
-      var promises = [test, test, test, test]
-      helper.parallel(promises, 2).catch(function (err) {
+      var promiseGens = [test, test, test, test]
+      helper.parallel(promiseGens, 2).catch(function (err) {
         e(err).to.be(mockError)
         e(counter).to.be(2)
         done()
