@@ -270,15 +270,18 @@ describe('promise-helper', function() {
     it('should parallel concurrency one by one if concurrency < promises.length', function (done) {
       var now = Date.now()
       var counter = 0
-      function test () {
-        return helper.delay(function () {
-          return counter++
-        }, 100)
+      function test (i) {
+        return function () {
+          return helper.delay(function () {
+            counter++
+            return i
+          }, 100)
+        }
       }
-      var promiseGens = [test, test, test, test]
+      var promiseGens = [test(0), test(1), test(2), test(3), test(4)]
       helper.parallel(promiseGens, 3).then(function (data) {
-        e(counter).to.be(4)
-        e(data).to.be.eql([0,1,2,3])
+        e(counter).to.be(5)
+        e(data).to.be.eql([0,1,2,3,4])
         e(Date.now() - now).to.be.greaterThan(200)
         e(Date.now() - now).not.to.be.greaterThan(300)
         done()
